@@ -1,5 +1,6 @@
-import {Table} from "./components/table/table";
+import {UserTable} from "./components/user-table/user-table";
+import './app.css'
 
-export const App = _ => <Table/>
+export const App = () => <UserTable/>
 
 
