@@ -27,7 +27,6 @@ export const usersSlice = createSlice<UsersInterface>({
                 state.loading = false
                 state.status = action.payload
                 state.users = action.payload.data
-                console.log(action.payload,'PPP')
             })
             .addCase(getUsers.rejected, (state, action) => {
                 state.loading = false
