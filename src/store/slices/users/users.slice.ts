@@ -1,7 +1,7 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import axios from "axios";
 import {REACT_APP_API_URL} from "../../../components/helpers/api";
 import {UsersInterface} from "../../interfaces/users.interface";
+import {axiosInstance} from "../../instance/axios.instance";
 
 const initialState: UsersInterface = {
     users: [],
@@ -10,7 +10,7 @@ const initialState: UsersInterface = {
 }
 
 export const getUsers = createAsyncThunk('getUsers', async () => {
-    return await axios.get(`${REACT_APP_API_URL}users/`)
+    return await axiosInstance.get(`${REACT_APP_API_URL}users/`)
 })
 
 
@@ -26,6 +26,8 @@ export const usersSlice = createSlice<UsersInterface>({
             .addCase(getUsers.fulfilled, (state, action) => {
                 state.loading = false
                 state.status = action.payload
+                state.users = action.payload.data
+                console.log(action.payload,'PPP')
             })
             .addCase(getUsers.rejected, (state, action) => {
                 state.loading = false
