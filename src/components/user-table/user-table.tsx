@@ -1,20 +1,13 @@
 import {useAppDispatch, useAppSelector} from "../../store/hooks/hooks";
 import {useEffect} from "react";
 import {getUsers} from "../../store/slices/users/users.slice";
-import MaterialTable from "material-table";
-import {Grid2} from "@mui/material";
+import MUIDataTable from "mui-datatables";
+import {Dispatch} from "../../store/interfaces/dispatch.interface";
+import {CircularProgress} from "@mui/material";
 
 export const UserTable = () => {
-
-    const columns = [
-        {title: 'Name', field: 'name'},
-        {title: 'Username', field: 'userName'},
-        {title: 'Email', field: 'email'},
-        {title: 'Phone', field: 'phone'},
-    ]
-
     const {users} = useAppSelector(state => state.users)
-    const dispatch = useAppDispatch()
+    const dispatch: Dispatch = useAppDispatch()
     useEffect(() => {
         try {
             dispatch(getUsers())
@@ -22,21 +15,23 @@ export const UserTable = () => {
             console.log(e)
         }
     }, [dispatch])
-    console.log(users, 'FFFF')
+
+    const columns = ['name', 'username', 'email', 'phone']
+    const options = {
+        filterType: 'checkbox',
+        pagination: false
+    };
+
     return (
-        <Grid2 container
-               display={'flex'}
-               alignItems={'center'}
-               justifyContent={'space-between'}
-               sx={{width: '100%'}}
-        >
-            <MaterialTable
-                title={'Users'}
-                width={'100%'}
-                data={[]}
+        <>
+            {users.length ? <MUIDataTable
+                sx={12}
+                title={"Users List"}
+                data={users}
                 columns={columns}
-            />
-        </Grid2>
+                options={options}
+            /> : <CircularProgress/>}
+        </>
     );
 };
 

@@ -5,7 +5,13 @@ import usersSlice from "./slices/users/users.slice";
 export const store = configureStore({
     reducer: {
         users: usersSlice,
-    }
+    },
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+            serializableCheck: {
+                ignoredActions: ['getUsers/fulfilled'],
+            },
+        }),
 })
 
 

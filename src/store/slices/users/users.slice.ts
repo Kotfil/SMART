@@ -2,6 +2,7 @@ import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {REACT_APP_API_URL} from "../../../components/helpers/api";
 import {UsersInterface} from "../../interfaces/users.interface";
 import {axiosInstance} from "../../instance/axios.instance";
+import {UserActionInterface} from "../../interfaces/user-action.interface";
 
 const initialState: UsersInterface = {
     users: [],
@@ -10,7 +11,7 @@ const initialState: UsersInterface = {
 }
 
 export const getUsers = createAsyncThunk('getUsers', async () => {
-    return await axiosInstance.get(`${REACT_APP_API_URL}users/`)
+    return await axiosInstance.get(`${REACT_APP_API_URL}users`)
 })
 
 
@@ -23,12 +24,11 @@ export const usersSlice = createSlice<UsersInterface>({
             .addCase(getUsers.pending, (state) => {
                 state.loading = true
             })
-            .addCase(getUsers.fulfilled, (state, action) => {
+            .addCase(getUsers.fulfilled, (state, action: UserActionInterface) => {
                 state.loading = false
-                state.status = action.payload
                 state.users = action.payload.data
             })
-            .addCase(getUsers.rejected, (state, action) => {
+            .addCase(getUsers.rejected, (state, action: unknown) => {
                 state.loading = false
                 state.error = action.error
             })
@@ -37,4 +37,3 @@ export const usersSlice = createSlice<UsersInterface>({
 
 
 export default usersSlice.reducer
-export const usersActions = usersSlice.actions
