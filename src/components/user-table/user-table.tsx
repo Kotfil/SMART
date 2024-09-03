@@ -1,12 +1,13 @@
 import {useAppDispatch, useAppSelector} from "../../store/hooks/hooks";
 import {useEffect} from "react";
 import {getUsers} from "../../store/slices/users/users.slice";
-import MUIDataTable from "mui-datatables";
+import MUIDataTable, {MUIDataTableOptions} from "mui-datatables";
 import {Dispatch} from "../../store/interfaces/dispatch.interface";
 import {CircularProgress} from "@mui/material";
 
 export const UserTable = () => {
-    const {users} = useAppSelector(state => state.users)
+    const result = useAppSelector(state => state.users)
+    const {data} = result.users
     const dispatch: Dispatch = useAppDispatch()
     useEffect(() => {
         try {
@@ -17,17 +18,15 @@ export const UserTable = () => {
     }, [dispatch])
 
     const columns = ['name', 'username', 'email', 'phone']
-    const options = {
+    const options: MUIDataTableOptions | undefined = {
         filterType: 'checkbox',
         pagination: false
     };
-
     return (
         <>
-            {users.length ? <MUIDataTable
-                sx={12}
+            {data?.length ? <MUIDataTable
                 title={"Users List"}
-                data={users}
+                data={data}
                 columns={columns}
                 options={options}
             /> : <CircularProgress/>}

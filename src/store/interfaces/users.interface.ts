@@ -1,9 +1,9 @@
-import axios from "axios";
+import {SerializedError} from "@reduxjs/toolkit";
 
 export interface UsersInterface {
     users: Array<UserInterface> | []
     loading: boolean
-    error: null | axios.AxiosError
+    error: string | null | SerializedError
 
 }
 
