@@ -28,7 +28,7 @@ export const usersSlice = createSlice<UsersInterface>({
                 state.loading = false
                 state.users = action.payload.data
             })
-            .addCase(getUsers.rejected, (state, action: unknown) => {
+            .addCase(getUsers.rejected, (state, action) => {
                 state.loading = false
                 state.error = action.error
             })
