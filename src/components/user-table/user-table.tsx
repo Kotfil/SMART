@@ -6,8 +6,7 @@ import {Dispatch} from "../../store/interfaces/dispatch.interface";
 import {CircularProgress} from "@mui/material";
 
 export const UserTable = () => {
-    const result = useAppSelector(state => state.users)
-    const {data} = result.users
+    const {users} = useAppSelector(state => state.users)
     const dispatch: Dispatch = useAppDispatch()
     useEffect(() => {
         try {
@@ -22,11 +21,12 @@ export const UserTable = () => {
         filterType: 'checkbox',
         pagination: false
     };
+
     return (
         <>
-            {data?.length ? <MUIDataTable
+            {users?.length ? <MUIDataTable
                 title={"Users List"}
-                data={data}
+                data={users}
                 columns={columns}
                 options={options}
             /> : <CircularProgress/>}

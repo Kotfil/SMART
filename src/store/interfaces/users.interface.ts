@@ -3,9 +3,15 @@ import {SerializedError} from "@reduxjs/toolkit";
 export interface UsersInterface {
     users: Array<UserInterface> | []
     loading: boolean
-    error: string | null | SerializedError
+    error:  null | SerializedError
 
 }
+interface ApiResponse<T> {
+    data: T;
+}
+
+export type GetUsersResponse = ApiResponse<UserInterface[]>;
+
 
 export interface UserInterface {
     id: number
